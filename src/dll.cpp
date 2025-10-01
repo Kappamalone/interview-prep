@@ -33,7 +33,6 @@ public:
     auto curr = other.head;
     while (curr) {
       push_back(curr->value);
-      ++length;
       curr = curr->next;
     }
   }
@@ -46,7 +45,6 @@ public:
     auto curr = other.head;
     while (curr) {
       push_back(curr->value);
-      ++length;
       curr = curr->next;
     }
     return *this;
