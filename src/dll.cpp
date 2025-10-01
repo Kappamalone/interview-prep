@@ -60,7 +60,7 @@ public:
     if (this == &other)
       return *this;
 
-    // MUST CLEAR OWN CONTENTS
+    // MUST CLEAR OWN CONTENTS otherwise mem leak
     clear();
 
     head = std::exchange(other.head, nullptr);
@@ -83,21 +83,23 @@ public:
     length = 0;
   }
 
+  // nit example on maintaining invariants even with exceptions (aka exception
+  // safety)
+  // - allocate first
+  // - mutate later
+  // - commit last
   void push_front(int value) {
     auto node = new Node{value, nullptr, nullptr};
-    ++length;
 
-    // nothing in the list
     if (!head && !tail) {
       head = node;
       tail = head;
-      return;
+    } else {
+      node->next = head;
+      head->prev = node;
+      head = node;
     }
-
-    // else push to front
-    node->next = head;
-    head->prev = node;
-    head = node;
+    ++length;
   }
 
   std::optional<int> pop_front() noexcept {
