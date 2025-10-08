@@ -19,6 +19,9 @@
 // modify order is O(1) or O(log n) depending on if the price is different
 // (since we delete + insert)
 //
+// note from future uzman: you can get O(1) average add by just having a map of
+// price to level iterator!!
+//
 // we have one order book per symbol. each order book maintains two std::map's,
 // from a given price level to a structure that holds doubly linked lists
 // representing individual orders
@@ -212,6 +215,6 @@ int main() {
 std::list is simple and correct, but its scattered allocations kill cache
 locality. In production I’d replace it with an intrusive list whose nodes come
 from a pre-allocated pool so that all order nodes live contiguously in
-memory—same O(1) semantics, vastly better performance.
+memory - same O(1) semantics, vastly better performance.
 
 */

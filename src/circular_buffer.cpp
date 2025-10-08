@@ -32,7 +32,8 @@ public:
     if (this == &other)
       return *this;
 
-    delete[] buffer;
+    if (buffer)
+      delete[] buffer;
     read_pos = std::exchange(other.read_pos, 0);
     write_pos = std::exchange(other.write_pos, 0);
     buffer = std::exchange(other.buffer, nullptr);
